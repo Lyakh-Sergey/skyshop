@@ -1,6 +1,4 @@
-package org.skypro.skyshop.product.fixpriceproduct;
-
-import org.skypro.skyshop.product.Product;
+package org.skypro.skyshop.product;
 
 public class FixPriceProduct extends Product {
     private final static int FIXED_PRICE = 99;

@@ -1,6 +1,4 @@
-package org.skypro.skyshop.product.dscountedproduct;
-
-import org.skypro.skyshop.product.Product;
+package org.skypro.skyshop.product;
 
 public class DiscountedProduct extends Product {
     private int basePrice;
