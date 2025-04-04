@@ -1,11 +1,11 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
-
 
 public class App {
     public static void main(String[] args) {
@@ -50,5 +50,53 @@ public class App {
         System.out.println("\nОбщая стоимость корзины 2 после очистки: " + basket2.calculateTotalPriceProductsInBasket());
         System.out.println("\nВ корзине после очистки 1 есть Арбуз: " + basket1.containsProduct("Арбуз"));
         System.out.println("\nВ корзине после очистки 2 есть Огурец: " + basket2.containsProduct("Огурец"));
+        System.out.println();
+        SearchEngine searchEngine = new SearchEngine(20);
+        searchEngine.add(product1);
+        searchEngine.add(product2);
+        searchEngine.add(product3);
+        searchEngine.add(product4);
+        searchEngine.add(product5);
+        searchEngine.add(product6);
+        searchEngine.add(product7);
+        searchEngine.add(product8);
+        searchEngine.add(product9);
+        searchEngine.add(new Article("Арбузы", "Польза арбузов"));
+        searchEngine.add(new Article("Хлеб", "Хлеб всему голова"));
+        searchEngine.add(new Article("Полезный сад", "Польза и вред слив"));
+        searchEngine.add(new Article("Итальянские деликатесы", "Помидоры и прочее"));
+        searchEngine.add(new Article("Яблоки", "Польза яблок"));
+        searchEngine.add(new Article("Дыня", "Дыня лучшая"));
+        searchEngine.add(new Article("Полезный огород", "Польза и вред огурца"));
+        searchEngine.add(new Article("Америка и  деликатесы", "Ананасы наше всё"));
+        searchEngine.add(new Article("Пуаре", "Грушевый сидр"));
+        searchEngine.add(new Article("Канцелярия", "Польза и вред гелевых ручек"));
+        searchEngine.add(new Article("Мексика и деликатесы", "Агава наше всё"));
+        searchEngine.add(new Article("Гаджеты и лайки", "Лучшие смартфоны 2025"));
+        System.out.println();
+        System.out.println("Результаты поиска по 'арбуз':");
+        searchEngine.printSearchResults(searchEngine.search("арбуз"));
+        System.out.println("\nРезультаты поиска по 'хлеб':");
+        searchEngine.printSearchResults(searchEngine.search("хлеб"));
+        System.out.println("\nРезультаты поиска по 'слив':");
+        searchEngine.printSearchResults(searchEngine.search("слив"));
+        System.out.println("\nРезультаты поиска по 'помидор':");
+        searchEngine.printSearchResults(searchEngine.search("помидор"));
+        System.out.println("\nРезультаты поиска по 'итальянские':");
+        searchEngine.printSearchResults(searchEngine.search("итальянские"));
+        System.out.println("\nРезультаты поиска по 'наше всё':");
+        searchEngine.printSearchResults(searchEngine.search("наше всё"));
+        System.out.println("\nРезультаты поиска по 'сидр':");
+        searchEngine.printSearchResults(searchEngine.search("сидр"));
+        System.out.println("\nРезультаты поиска по 'карандаш':");
+        searchEngine.printSearchResults(searchEngine.search("карандаш"));
+        System.out.println("\nРезультаты поиска по 'текила':");
+        searchEngine.printSearchResults(searchEngine.search("текилв"));
+        System.out.println("\nРезультаты поиска по 'смартфоны':");
+        searchEngine.printSearchResults(searchEngine.search("смартфоны"));
     }
+
+
+
+
 }
