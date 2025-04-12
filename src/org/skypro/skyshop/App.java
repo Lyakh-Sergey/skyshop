@@ -159,7 +159,13 @@ public class App {
             System.out.println("Проверка завершена");
         }
         System.out.println("\nПоиск самого подходящего элемента:");
-        Searchable[] SearchEngine = null;
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании поискового запроса: " + e.getMessage());
+        } catch (BestResultNotFound e) {
+            throw new RuntimeException(e);
+        }
         try {
             Searchable bestMatch = searchEngine.findBestMatch("яблоки");
             System.out.println("Найден лучший результат: " + bestMatch.getSearchTerm());
