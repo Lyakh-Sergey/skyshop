@@ -94,9 +94,91 @@ public class App {
         searchEngine.printSearchResults(searchEngine.search("текилв"));
         System.out.println("\nРезультаты поиска по 'смартфоны':");
         searchEngine.printSearchResults(searchEngine.search("смартфоны"));
+        System.out.println("\nПроверка при добавлении новых продуктов");
+        try {
+            Product emptyNameProduct = new SimpleProduct(" ", 100);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            Product nullNameProduct = new SimpleProduct(null, 100);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            Product zeroPriceProduct = new SimpleProduct("Телефон", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            Product zeroPriceDiscountProduct = new DiscountedProduct("Смартфон", 0, 20);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            Product negativeDiscountProduct = new DiscountedProduct("Ноутбук", 50000, -10);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        }
+
+        try {
+            Product invalidDiscountProduct = new DiscountedProduct("Планшет", 30000, 110);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании продукта: " + e.getMessage());
+        } finally {
+            System.out.println("Проверка завершена");
+        }
+        System.out.println("\nПроверка при добавлении новых статей");
+        try {
+            Article emptyTitleArticle = new Article(" ", "Пустое название");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании статьи: " + e.getMessage());
+        }
+
+        try {
+            Article nullTitleArticle = new Article(null, "Нет названия");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании статьи: " + e.getMessage());
+        }
+
+        try {
+            Article emptyTextArticle = new Article("Телефон", " ");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании статьи: " + e.getMessage());
+        }
+
+        try {
+            Article nullTextArticle = new Article("Смартфон", null);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании статьи: " + e.getMessage());
+        } finally {
+            System.out.println("Проверка завершена");
+        }
+        System.out.println("\nПоиск самого подходящего элемента:");
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка при создании поискового запроса: " + e.getMessage());
+        } catch (BestResultNotFound e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("яблоки");
+            System.out.println("Найден лучший результат: " + bestMatch.getSearchTerm());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch("магнитофон");
+            System.out.println("Найден лучший результат: " + bestMatch.getSearchTerm());
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
     }
-
-
-
-
 }
