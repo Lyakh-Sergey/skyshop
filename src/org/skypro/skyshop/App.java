@@ -7,6 +7,8 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
 
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
         Product product1 = new SimpleProduct("Арбуз", 90);
@@ -25,7 +27,6 @@ public class App {
         basket1.addProduct(product3);
         basket1.addProduct(product4);
         basket1.addProduct(product5);
-        basket1.addProduct(product6);
         basket2.addProduct(product6);
         basket2.addProduct(product7);
         basket2.addProduct(product8);
@@ -40,6 +41,25 @@ public class App {
         System.out.println("\nВ корзине 2 есть Огурец: " + basket2.containsProduct("Огурец"));
         System.out.println("\nВ корзине 1 есть Огурец: " + basket1.containsProduct("Огурец"));
         System.out.println("\nВ корзине 2 есть Арбуз: " + basket2.containsProduct("Арбуз"));
+        System.out.println("\nСодержимое корзины до удаления:");
+        basket1.printBasket();
+        System.out.println("\nУдаляем продукт 'Яблоко':");
+        List<Product> removedProducts = basket1.removeProductsByName("Яблоко");
+        if (!removedProducts.isEmpty()) {
+            System.out.println("Удаленные продукты:");
+            for (Product product : removedProducts) {
+                System.out.println(product);
+            }
+        }
+        System.out.println("\nСодержимое корзины после удаления:");
+        basket1.printBasket();
+        System.out.println("\nПытаемся удалить продукт 'Манго':");
+        removedProducts = basket1.removeProductsByName("Манго");
+        if (removedProducts.isEmpty()) {
+            System.out.println("Список удаленных продуктов пуст");
+        }
+        System.out.println("\nСодержимое корзины после попытки удаления:");
+        basket1.printBasket();
         basket1.cleaningTheBasket();
         basket2.cleaningTheBasket();
         System.out.println("\nСодержимое корзины 1 после очистки:");
@@ -50,29 +70,35 @@ public class App {
         System.out.println("\nОбщая стоимость корзины 2 после очистки: " + basket2.calculateTotalPriceProductsInBasket());
         System.out.println("\nВ корзине после очистки 1 есть Арбуз: " + basket1.containsProduct("Арбуз"));
         System.out.println("\nВ корзине после очистки 2 есть Огурец: " + basket2.containsProduct("Огурец"));
+
+
+
+
+
+
         System.out.println();
-        SearchEngine searchEngine = new SearchEngine(20);
-        searchEngine.add(product1);
-        searchEngine.add(product2);
-        searchEngine.add(product3);
-        searchEngine.add(product4);
-        searchEngine.add(product5);
-        searchEngine.add(product6);
-        searchEngine.add(product7);
-        searchEngine.add(product8);
-        searchEngine.add(product9);
-        searchEngine.add(new Article("Арбузы", "Польза арбузов"));
-        searchEngine.add(new Article("Хлеб", "Хлеб всему голова"));
-        searchEngine.add(new Article("Полезный сад", "Польза и вред слив"));
-        searchEngine.add(new Article("Итальянские деликатесы", "Помидоры и прочее"));
-        searchEngine.add(new Article("Яблоки", "Польза яблок"));
-        searchEngine.add(new Article("Дыня", "Дыня лучшая"));
-        searchEngine.add(new Article("Полезный огород", "Польза и вред огурца"));
-        searchEngine.add(new Article("Америка и  деликатесы", "Ананасы наше всё"));
-        searchEngine.add(new Article("Пуаре", "Грушевый сидр"));
-        searchEngine.add(new Article("Канцелярия", "Польза и вред гелевых ручек"));
-        searchEngine.add(new Article("Мексика и деликатесы", "Агава наше всё"));
-        searchEngine.add(new Article("Гаджеты и лайки", "Лучшие смартфоны 2025"));
+        SearchEngine searchEngine = new SearchEngine();
+        searchEngine.addSearchable(product1);
+        searchEngine.addSearchable(product2);
+        searchEngine.addSearchable(product3);
+        searchEngine.addSearchable(product4);
+        searchEngine.addSearchable(product5);
+        searchEngine.addSearchable(product6);
+        searchEngine.addSearchable(product7);
+        searchEngine.addSearchable(product8);
+        searchEngine.addSearchable(product9);
+        searchEngine.addSearchable(new Article("Арбузы", "Польза арбузов"));
+        searchEngine.addSearchable(new Article("Хлеб", "Хлеб всему голова"));
+        searchEngine.addSearchable(new Article("Полезный сад", "Польза и вред слив"));
+        searchEngine.addSearchable(new Article("Итальянские деликатесы", "Помидоры и прочее"));
+        searchEngine.addSearchable(new Article("Яблоки", "Польза яблок"));
+        searchEngine.addSearchable(new Article("Дыня", "Дыня лучшая"));
+        searchEngine.addSearchable(new Article("Полезный огород", "Польза и вред огурца"));
+        searchEngine.addSearchable(new Article("Америка и  деликатесы", "Ананасы наше всё"));
+        searchEngine.addSearchable(new Article("Пуаре", "Грушевый сидр"));
+        searchEngine.addSearchable(new Article("Канцелярия", "Польза и вред гелевых ручек"));
+        searchEngine.addSearchable(new Article("Мексика и деликатесы", "Агава наше всё"));
+        searchEngine.addSearchable(new Article("Гаджеты и лайки", "Лучшие смартфоны 2025"));
         System.out.println();
         System.out.println("Результаты поиска по 'арбуз':");
         searchEngine.printSearchResults(searchEngine.search("арбуз"));
