@@ -1,37 +1,25 @@
 package org.skypro.skyshop;
 
+import java.util.LinkedList;
+
 public class SearchEngine {
-    private final Searchable[] searchables;
-    private int currentIndex = 0;
+    private final LinkedList<Searchable> searchables = new LinkedList<>();
 
-    public SearchEngine(int capacity) {
-        this.searchables = new Searchable[capacity];
+    public void addSearchable(Searchable searchable) {
+        searchables.add(searchable);
     }
 
-    public void add(Searchable searchable) {
-        if (currentIndex < searchables.length) {
-            searchables[currentIndex++] = searchable;
-        } else {
-            System.out.println("Поисковая система переполнена, не удается добавить больше элементов");
-        }
-    }
-
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int foundCount = 0;
-
-        for (Searchable item : searchables) {
-            if (item != null && item.getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
-                results[foundCount++] = item;
-                if (foundCount == 5) {
-                    break;
-                }
+    public LinkedList<Searchable> search(String query) {
+        LinkedList<Searchable> results = new LinkedList<>();
+        for (Searchable searchable : searchables) {
+            if (searchable.getSearchableName().toLowerCase().contains(query.toLowerCase())) {
+                results.add(searchable);
             }
         }
         return results;
     }
 
-    public void printSearchResults(Searchable[] results) {
+    public void printSearchResults(LinkedList<Searchable> results) {
         for (Searchable item : results) {
             if (item != null) {
                 System.out.println(item.getStringRepresentation());
