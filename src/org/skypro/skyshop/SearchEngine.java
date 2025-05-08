@@ -1,31 +1,34 @@
 package org.skypro.skyshop;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class SearchEngine {
-    private final LinkedList<Searchable> searchables = new LinkedList<>();
+    private final List<Searchable> searchables = new ArrayList<>();
 
     public void addSearchable(Searchable searchable) {
         searchables.add(searchable);
     }
 
-    public LinkedList<Searchable> search(String query) {
-        LinkedList<Searchable> results = new LinkedList<>();
-        for (Searchable searchable : searchables) {
-            if (searchable.getSearchableName().toLowerCase().contains(query.toLowerCase())) {
-                results.add(searchable);
+    public Map<String, Searchable> search(String query) {
+        Map<String, Searchable> results = new TreeMap<>();
+        String queryLower = query.toLowerCase();
+
+        for (Searchable item : searchables) {
+            if (item.getSearchableName().toLowerCase().contains(queryLower)) {
+                results.put(item.getSearchableName(), item);
             }
         }
         return results;
     }
 
-    public void printSearchResults(LinkedList<Searchable> results) {
-        for (Searchable item : results) {
-            if (item != null) {
-                System.out.println(item.getStringRepresentation());
-            } else {
-                System.out.println("Ничего не найдено");
-            }
+    public void printSearchResults(Map<String, Searchable> results) {
+        if (results.isEmpty()) {
+            System.out.println("Ничего не найдено");
+            return;
+        }
+
+        for (Searchable item : results.values()) {
+            System.out.println(item.getStringRepresentation());
         }
     }
 
@@ -36,12 +39,13 @@ public class SearchEngine {
 
         Searchable bestMatch = null;
         int maxCount = -1;
+        String searchLower = search.toLowerCase();
 
         for (Searchable item : searchables) {
             if (item == null) continue;
 
-            String searchTerm = item.getSearchTerm();
-            int count = countSubstringOccurrences(searchTerm.toLowerCase(), search.toLowerCase());
+            String searchTerm = item.getSearchTerm().toLowerCase();
+            int count = countSubstringOccurrences(searchTerm, searchLower);
 
             if (count > maxCount) {
                 maxCount = count;
