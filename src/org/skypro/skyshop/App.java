@@ -70,12 +70,6 @@ public class App {
         System.out.println("\nОбщая стоимость корзины 2 после очистки: " + basket2.calculateTotalPriceProductsInBasket());
         System.out.println("\nВ корзине после очистки 1 есть Арбуз: " + basket1.containsProduct("Арбуз"));
         System.out.println("\nВ корзине после очистки 2 есть Огурец: " + basket2.containsProduct("Огурец"));
-
-
-
-
-
-
         System.out.println();
         SearchEngine searchEngine = new SearchEngine();
         searchEngine.addSearchable(product1);
@@ -87,18 +81,26 @@ public class App {
         searchEngine.addSearchable(product7);
         searchEngine.addSearchable(product8);
         searchEngine.addSearchable(product9);
+        searchEngine.addSearchable(product1);
+        searchEngine.addSearchable(product2);
+        searchEngine.addSearchable(product3);
         searchEngine.addSearchable(new Article("Арбузы", "Польза арбузов"));
+        searchEngine.addSearchable(new Article("Арбузы", "Вред арбузов"));
         searchEngine.addSearchable(new Article("Хлеб", "Хлеб всему голова"));
+        searchEngine.addSearchable(new Article("Хлебный квас", "Хлебный квас всему голова"));
         searchEngine.addSearchable(new Article("Полезный сад", "Польза и вред слив"));
         searchEngine.addSearchable(new Article("Итальянские деликатесы", "Помидоры и прочее"));
+        searchEngine.addSearchable(new Article("Деликатесы итальянские", "Помидоры и прочее"));
+        searchEngine.addSearchable(new Article("Итальянские", "Помидоры и прочее"));
         searchEngine.addSearchable(new Article("Яблоки", "Польза яблок"));
         searchEngine.addSearchable(new Article("Дыня", "Дыня лучшая"));
         searchEngine.addSearchable(new Article("Полезный огород", "Польза и вред огурца"));
-        searchEngine.addSearchable(new Article("Америка и  деликатесы", "Ананасы наше всё"));
+        searchEngine.addSearchable(new Article("Америка и деликатесы", "Ананасы наше всё"));
         searchEngine.addSearchable(new Article("Пуаре", "Грушевый сидр"));
         searchEngine.addSearchable(new Article("Канцелярия", "Польза и вред гелевых ручек"));
         searchEngine.addSearchable(new Article("Мексика и деликатесы", "Агава наше всё"));
         searchEngine.addSearchable(new Article("Гаджеты и лайки", "Лучшие смартфоны 2025"));
+        searchEngine.addSearchable(new Article("Арбузы", "Польза арбузов"));
         System.out.println();
         System.out.println("Результаты поиска по 'арбуз':");
         searchEngine.printSearchResults(searchEngine.search("арбуз"));
@@ -117,7 +119,7 @@ public class App {
         System.out.println("\nРезультаты поиска по 'карандаш':");
         searchEngine.printSearchResults(searchEngine.search("карандаш"));
         System.out.println("\nРезультаты поиска по 'текила':");
-        searchEngine.printSearchResults(searchEngine.search("текилв"));
+        searchEngine.printSearchResults(searchEngine.search("текила"));
         System.out.println("\nРезультаты поиска по 'смартфоны':");
         searchEngine.printSearchResults(searchEngine.search("смартфоны"));
         System.out.println("\nПроверка при добавлении новых продуктов");
