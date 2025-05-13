@@ -1,37 +1,24 @@
 package org.skypro.skyshop;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private final Set<Searchable> searchables = new HashSet<>();
 
-    private static class SearchableComparator implements Comparator<Searchable> {
-        @Override
-        public int compare(Searchable s1, Searchable s2) {
-            int lengthCompare = Integer.compare(s2.getSearchableName().length(), s1.getSearchableName().length());
-            if (lengthCompare == 0) {
-                return s1.getSearchableName().compareTo(s2.getSearchableName());
-            }
-            return lengthCompare;
-        }
-    }
+    private static final Comparator<Searchable> SEARCHABLE_COMPARATOR =
+            Comparator.comparingInt((Searchable s) -> s.getSearchableName().length()).reversed().thenComparing(Searchable::getSearchableName);
 
-    private static final Comparator<Searchable> SEARCHABLE_COMPARATOR = new SearchableComparator();
 
     public void addSearchable(Searchable searchable) {
         searchables.add(searchable);
     }
 
     public TreeSet<Searchable> search(String query) {
-        TreeSet<Searchable> results = new TreeSet<>(SEARCHABLE_COMPARATOR);
         String queryLower = query.toLowerCase();
-
-        for (Searchable item : searchables) {
-            if (item.getSearchableName().toLowerCase().contains(queryLower)) {
-                results.add(item);
-            }
-        }
-        return results;
+        return searchables.stream()
+                .filter(item -> item.getSearchableName().toLowerCase().contains(queryLower))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(SEARCHABLE_COMPARATOR)));
     }
 
     public void printSearchResults(TreeSet<Searchable> results) {
@@ -39,10 +26,7 @@ public class SearchEngine {
             System.out.println("Ничего не найдено");
             return;
         }
-
-        for (Searchable item : results) {
-            System.out.println(item.getStringRepresentation());
-        }
+        results.forEach(item -> System.out.println(item.getStringRepresentation()));
     }
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {
@@ -50,27 +34,11 @@ public class SearchEngine {
             throw new IllegalArgumentException("Поисковый запрос не может быть пустым");
         }
 
-        Searchable bestMatch = null;
-        int maxCount = -1;
-        String searchLower = search.toLowerCase();
-
-        for (Searchable item : searchables) {
-            if (item == null) continue;
-
-            String searchTerm = item.getSearchTerm().toLowerCase();
-            int count = countSubstringOccurrences(searchTerm, searchLower);
-
-            if (count > maxCount) {
-                maxCount = count;
-                bestMatch = item;
-            }
-        }
-
-        if (maxCount == 0) {
-            throw new BestResultNotFound(search);
-        }
-
-        return bestMatch;
+        return searchables.stream()
+                .filter(Objects::nonNull)
+                .max(Comparator.comparingInt(item -> countSubstringOccurrences(item.getSearchTerm().toLowerCase(), search.toLowerCase())))
+                .filter(item -> countSubstringOccurrences(item.getSearchTerm().toLowerCase(), search.toLowerCase()) > 0)
+                .orElseThrow(() -> new BestResultNotFound(search));
     }
 
     private int countSubstringOccurrences(String str, String substring) {
